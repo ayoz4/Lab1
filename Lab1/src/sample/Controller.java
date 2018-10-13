@@ -1,16 +1,21 @@
 package sample;
+import sample.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
-public class Controller {
+public class Controller implements Initializable {
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) { }
 
     @FXML
     private ResourceBundle resources;
@@ -22,10 +27,10 @@ public class Controller {
     private Pane createTrain;
 
     @FXML
-    private ComboBox<?> trainList;
+    private ComboBox trainList;
 
     @FXML
-    private ComboBox<?> wagonList;
+    private ComboBox wagonList;
 
     @FXML
     private MenuItem addWagon, addSeat;
@@ -88,16 +93,64 @@ public class Controller {
             trains.add(new Train(trainNumber.getText()));
             infoWindow.setText("Информация успешно сохранена!");
             addWagon.setDisable(false);
+            hidePanes(true, true, true, true);
+            trainNumber.clear();
         }
     }
 
+    //Функция открытия слоя с созданием вагона
     @FXML
-    void createWagonMenu(ActionEvent event) {
+    void createWagonMenu(ActionEvent event)
+    {
+        hidePanes(true, false, true, true);
+        infoWindow.setText("Добавление вагона");
+        trainList.getItems().clear();
+        for (int i = 0; i < trains.size(); i++)
+        {
+            trainList.getItems().addAll(trains.get(i).getTrainNumber());
+        }
+        trainList.setValue(trains.get(0).getTrainNumber());
+    }
+
+    @FXML
+    void createWagonButton(ActionEvent event)
+    {
+        if ((Integer.parseInt(seatNumber.getText()) < 1) || (Integer.parseInt(seatNumber.getText()) > 54) || (seatNumber.getText().equals("")))
+        {
+            infoWindow.setText("Некорректные данные!");
+        }
+        if (Integer.parseInt(WagonNumber.getText()) < 1)
+        {
+            infoWindow.setText("Не правда!");
+        }
+        else
+            {
+
+                int wagonNumber = Integer.parseInt(WagonNumber.getText());
+                int numberOfSeats = Integer.parseInt(seatNumber.getText());
+                Train tr;
+                //Добавление в класс Wagon
+                for (int i = 0; i < trains.size(); i++)
+                {
+                    if (trains.get(i).getTrainNumber().equals(trainList.getValue().toString())) {
+                        tr = trains.get(i);
+                        wagons.add(new Wagon(wagonNumber, numberOfSeats, tr));
+                        break;
+                    }
+                }
+                infoWindow.setText("Успешно!");
+                addSeat.setDisable(false);
+                hidePanes(true, true, true, true);
+                seatNumber.clear();
+                WagonNumber.clear();
+
+            }
 
     }
 
     @FXML
-    void createSeatMenu(ActionEvent event) {
+    void createSeatMenu(ActionEvent event)
+    {
 
     }
 

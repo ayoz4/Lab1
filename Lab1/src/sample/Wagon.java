@@ -1,11 +1,11 @@
 package sample;
-        import sample.Train;
+import sample.Train;
 
 public class Wagon
 {
     private int wagonNumber;            //Номер вагона
     private int numberOfSeats;          //Кол-во мест в вагоне
-    private Train train;                //Вагое какого поезда
+    private Train train;                //Вагон какого поезда
 
 
     public Wagon(int wagonNumber, int numberOfSeats, Train train)

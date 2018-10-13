@@ -45,24 +45,24 @@
       </Pane>
       <Pane fx:id="createWagon" layoutX="12.0" layoutY="39.0" prefHeight="370.0" prefWidth="700.0" visible="false">
          <children>
-            <Label layoutX="180.0" layoutY="128.0" text="Номер вагона">
+            <Label layoutX="179.0" layoutY="174.0" text="Номер вагона">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="WagonNumber" layoutX="369.0" layoutY="126.0" />
-            <Button layoutX="298.0" layoutY="266.0" mnemonicParsing="false" text="Создать" />
+            <TextField fx:id="WagonNumber" layoutX="369.0" layoutY="172.0" />
+            <Button layoutX="298.0" layoutY="266.0" mnemonicParsing="false" onAction="#createWagonButton" text="Создать" />
             <Label layoutX="239.0" layoutY="71.0" text="Создать вагон">
                <font>
                   <Font size="22.0" />
                </font>
             </Label>
-            <Label layoutX="113.0" layoutY="174.0" text="Кол-во мест в вагоне">
+            <Label layoutX="125.0" layoutY="128.0" text="Кол-во мест в вагоне">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="seatNumber" layoutX="369.0" layoutY="172.0" />
+            <TextField fx:id="seatNumber" layoutX="369.0" layoutY="126.0" />
             <Label layoutX="182.0" layoutY="216.0" text="Вагон поезда">
                <font>
                   <Font size="18.0" />
