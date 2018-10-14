@@ -16,4 +16,9 @@ public class Seat
     {
         return seatNumber;
     }
+
+    public  Wagon getWagon()
+    {
+        return wagon;
+    }
 }
