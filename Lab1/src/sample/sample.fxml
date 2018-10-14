@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -25,79 +27,80 @@
               <MenuItem mnemonicParsing="false" onAction="#showInfo" text="Info Table" />
             </items>
           </Menu>
+            <Menu disable="true" mnemonicParsing="false" />
         </menus>
       </MenuBar>
       <Pane fx:id="createTrain" layoutX="2.0" layoutY="29.0" prefHeight="370.0" prefWidth="700.0" visible="false">
          <children>
-            <Label layoutX="180.0" layoutY="128.0" text="Номер поезда">
+            <Label layoutX="14.0" layoutY="99.0" text="Номер поезда">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="trainNumber" layoutX="369.0" layoutY="126.0" />
-            <Button layoutX="298.0" layoutY="233.0" mnemonicParsing="false" onAction="#createTrainButton" text="Создать" />
-            <Label layoutX="239.0" layoutY="71.0" text="Создать поезд">
+            <TextField fx:id="trainNumber" layoutX="159.0" layoutY="100.0" />
+            <Button layoutX="65.0" layoutY="165.0" mnemonicParsing="false" onAction="#createTrainButton" prefHeight="79.0" prefWidth="188.0" text="Создать" />
+            <Label layoutX="14.0" layoutY="38.0" text="Создать поезд">
                <font>
                   <Font size="22.0" />
                </font>
             </Label>
          </children>
       </Pane>
-      <Pane fx:id="createWagon" layoutX="12.0" layoutY="39.0" prefHeight="370.0" prefWidth="700.0" visible="false">
+      <Pane fx:id="createWagon" layoutY="29.0" prefHeight="370.0" prefWidth="700.0" visible="false">
          <children>
-            <Label layoutX="179.0" layoutY="174.0" text="Номер вагона">
+            <Label layoutX="14.0" layoutY="122.0" text="Номер вагона">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="WagonNumber" layoutX="369.0" layoutY="172.0" />
-            <Button layoutX="298.0" layoutY="266.0" mnemonicParsing="false" onAction="#createWagonButton" text="Создать" />
-            <Label layoutX="239.0" layoutY="71.0" text="Создать вагон">
+            <TextField fx:id="WagonNumber" layoutX="237.0" layoutY="123.0" prefHeight="25.0" prefWidth="28.0" />
+            <Button layoutX="85.0" layoutY="217.0" mnemonicParsing="false" onAction="#createWagonButton" prefHeight="79.0" prefWidth="176.0" text="Создать" />
+            <Label layoutX="14.0" layoutY="28.0" text="Создать вагон">
                <font>
                   <Font size="22.0" />
                </font>
             </Label>
-            <Label layoutX="125.0" layoutY="128.0" text="Кол-во мест в вагоне">
+            <Label layoutX="14.0" layoutY="85.0" text="Кол-во мест в вагоне">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="seatNumber1" layoutX="369.0" layoutY="126.0" />
-            <Label layoutX="182.0" layoutY="216.0" text="Вагон поезда">
+            <TextField fx:id="seatNumber1" layoutX="237.0" layoutY="86.0" prefHeight="25.0" prefWidth="28.0" />
+            <Label layoutX="14.0" layoutY="158.0" text="Вагон поезда">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <ComboBox fx:id="trainList" layoutX="369.0" layoutY="214.0" prefWidth="150.0" />
+            <ComboBox fx:id="trainList" layoutX="237.0" layoutY="159.0" prefHeight="25.0" prefWidth="87.0" />
          </children>
       </Pane>
-      <Label fx:id="infoWindow" layoutX="533.0" layoutY="356.0" prefHeight="43.0" prefWidth="167.0" text="Статус:" textAlignment="CENTER" />
-      <Pane fx:id="infoTable" prefHeight="407.0" prefWidth="707.0" visible="false">
+      <Pane fx:id="infoTable" layoutX="-2.0" layoutY="28.0" prefHeight="379.0" prefWidth="709.0" visible="false">
          <children>
             <TextArea fx:id="infoArea" layoutY="29.0" prefHeight="370.0" prefWidth="700.0" />
          </children>
       </Pane>
       <Pane fx:id="createSeat" prefHeight="370.0" prefWidth="700.0" visible="false">
          <children>
-            <Label layoutX="180.0" layoutY="128.0" text="Номер места">
+            <Label layoutX="14.0" layoutY="113.0" text="Номер места">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="seatNumber" layoutX="369.0" layoutY="126.0" prefHeight="27.0" prefWidth="54.0" />
-            <Button layoutX="298.0" layoutY="233.0" mnemonicParsing="false" onAction="#createSeatButton" text="Создать" />
-            <Label layoutX="239.0" layoutY="71.0" text="Создать место">
+            <TextField fx:id="seatNumber" layoutX="159.0" layoutY="113.0" prefHeight="27.0" prefWidth="28.0" />
+            <Button layoutX="20.0" layoutY="201.0" mnemonicParsing="false" onAction="#createSeatButton" prefHeight="86.0" prefWidth="204.0" text="Создать" />
+            <Label layoutX="14.0" layoutY="69.0" text="Создать место">
                <font>
                   <Font size="22.0" />
                </font>
             </Label>
-            <Label layoutX="180.0" layoutY="174.0" text="Вагон места">
+            <Label layoutX="14.0" layoutY="145.0" text="Вагон места">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <ComboBox fx:id="wagonList" layoutX="325.0" layoutY="172.0" prefWidth="150.0" />
+            <ComboBox fx:id="wagonList" layoutX="159.0" layoutY="146.0" prefHeight="25.0" prefWidth="87.0" />
          </children>
       </Pane>
+      <Label fx:id="infoWindow" contentDisplay="RIGHT" layoutX="2.0" layoutY="374.0" prefHeight="25.0" prefWidth="258.0" text="Статус:" textAlignment="CENTER" />
    </children>
 </AnchorPane>
