@@ -58,11 +58,14 @@ public class Controller implements Initializable {
     private Label infoWindow;
 
     @FXML
+    private TextField numberOfSeat;
+
+    @FXML
     private TextField seatNumber;
 
     private ArrayList<Train> trains = new ArrayList<>();
-    private ArrayList<Wagon> wagons = new ArrayList<>();
-    private ArrayList<Seat> seats = new ArrayList<>();
+    //private ArrayList<Wagon> wagons = new ArrayList<>();
+    //private ArrayList<Seat> seats = new ArrayList<>();
 
     //Функция для открытия слоя с созданием поезда
     @FXML
@@ -121,34 +124,70 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    void createWagonButton(ActionEvent event)
-    {
+    void createWagonButton(ActionEvent event) {
+        int wagonNumber = Integer.parseInt(WagonNumber.getText());
+        int seatNumber1 = Integer.parseInt(numberOfSeat.getText());
         if (WagonNumber.getText().equals(""))
         {
             infoWindow.setText("Не правда!");
-        }
-        else
-            {
-                //int wagonNumber = Integer.parseInt(WagonNumber.getText());
-                //int seatNumber1 = Integer.parseInt(seatNumber.getText());
-                Train tr;
-                //Добавление в класс Wagon
-                for (int i = 0; i < trains.size(); i++)
+        } else {
+            if (wagonNumber < 1) {
+                infoWindow.setText("Отрицательное значение");
+            } else {
                 {
-                    if (trains.get(i).getTrainNumber().equals(trainList.getValue().toString())) {
-                        tr = trains.get(i);
-                        wagons.add(new Wagon(WagonNumber.getText(), seatNumber.getText(), tr));
-                        break;
+                    //if (seatNumber1 < 1 || numberOfSeat.getText().equals("") || seatNumber1 > 54)
+                    if (numberOfSeat.getText().equals("")) {
+                        infoWindow.setText("Кол-во мест указано некрректно!");
+                    } else {
+                        //Train tr;
+                        //Добавление в класс Wagon
+                        for (int i = 0; i < trains.size(); i++) {
+                            System.out.println(trains.size());                                                  //Для примера
+                            if (trains.get(i).getTrainNumber().equals(trainList.getValue().toString())) {
+                                System.out.println("Добавление вагона");
+                                trains.get(i).addWagon(new Wagon(wagonNumber, seatNumber1));    //Добавление вагона в коллекцию вагонов в классе Train
+                                System.out.println("" + trains.get(i).getWagones().size());   //Для примерв
+                                break;
+                            }
+                        }
+                        infoWindow.setText("Успешно!");
+                        addSeat.setDisable(false);
+                        hidePanes(true, true, true, true);
+                        numberOfSeat.clear();
+                        WagonNumber.clear();
                     }
                 }
-                infoWindow.setText("Успешно!");
-                addSeat.setDisable(false);
-                hidePanes(true, true, true, true);
-                seatNumber.clear();
-                WagonNumber.clear();
-
             }
-
+                /*else
+                {
+                    //if (seatNumber1 < 1 || numberOfSeat.getText().equals("") || seatNumber1 > 54)
+                    if (numberOfSeat.getText().equals(""))
+                    {
+                        infoWindow.setText("Кол-во мест указано некрректно!");
+                    }
+                    else
+                    {
+                        //Train tr;
+                        //Добавление в класс Wagon
+                        for (int i = 0; i < trains.size(); i++)
+                        {
+                            System.out.println(trains.size());                                                  //Для примера
+                            if (trains.get(i).getTrainNumber().equals(trainList.getValue().toString()))
+                            {
+                                System.out.println("Добавление вагона");
+                                trains.get(i).addWagon(new Wagon(wagonNumber, seatNumber1));    //Добавление вагона в коллекцию вагонов в классе Train
+                                System.out.println("" + trains.get(i).getWagones().size());   //Для примерв
+                                break;
+                            }
+                        }
+                        infoWindow.setText("Успешно!");
+                        addSeat.setDisable(false);
+                        hidePanes(true, true, true, true);
+                        numberOfSeat.clear();
+                        WagonNumber.clear();
+                    }
+                }*/
+        }
     }
 
     @FXML
@@ -157,44 +196,56 @@ public class Controller implements Initializable {
         hidePanes(true, true, false, true);
         wagonList.getItems().clear();
         infoWindow.setText("Создание места");
-        for (int i = 0; i < seats.size(); i++)
+        for (int j = 0; j < trains.size(); j++)
         {
-            wagonList.getItems().addAll(wagons.get(i).getWagonNumber() + " (" +  wagons.get(i).getTrain().getTrainNumber()+ ") ");
+            for (int k = 0; k < trains.get(j).getWagones().size(); k++)
+            {
+                //wagonList.getItems().addAll(wagons.get(i).getWagonNumber() + " (" +  wagons.get(i).getTrain().getTrainNumber()+ ") ");
+                wagonList.getItems().addAll(trains.get(j).getWagones().get(k).getWagonNumber() + " (" + trains.get(j).getTrainNumber() + ") ");
+            }
+            //wagonList.setValue(wagons.get(0).getWagonNumber() + " (" +  wagons.get(0).getTrain().getTrainNumber()+ ") ");
         }
-        wagonList.setValue(wagons.get(0).getWagonNumber() + " (" +  wagons.get(0).getTrain().getTrainNumber()+ ") ");
+        wagonList.setValue(trains.get(0).getWagones().get(0).getWagonNumber() + " (" + trains.get(0).getTrainNumber() + ") ");
     }
 
     @FXML
     void createSeatButton(ActionEvent event)
     {
+        //String index = wagonList.getValue().toString();
+        //int index1 = Integer.parseInt(index);
+        int bracket = wagonList.getValue().toString().indexOf(" (");
+        int clBracket = wagonList.getValue().toString().indexOf(")");
         int seatNumber1 = Integer.parseInt(seatNumber.getText());
-        if (seatNumber1 < 1)
+        int wagon = Integer.parseInt(wagonList.getValue().toString().substring(0, bracket));
+        String train = wagonList.getValue().toString().substring(bracket + 2, clBracket);
+        int train1 = Integer.parseInt(train);
+        if (seatNumber1 < 1 || seatNumber1 > 54)    //TODO: Сделать проверку на места вагона
         {
-            infoWindow.setText("Не коррекнтное значение!");
+            infoWindow.setText("Некорректное значение!");
         }
         else
         {
-            if (wagonList.getValue() == null)
+            /*if (wagonList.getValue() == null)
                 infoWindow.setText("Выберите вагон, пожалуйста!");
-            else
+            else*/
+            for (int j = 0; j < trains.size(); j++)
             {
-                int bracket = wagonList.getValue().toString().indexOf(" (");
-                String wagon = wagonList.getValue().toString().substring(0, bracket);
-                int clBracket = wagonList.getValue().toString().indexOf(")");
-                String train = wagonList.getValue().toString().substring(bracket + 2, clBracket);
-
-                for (int i = 0; i < wagons.size(); i++)
+                for (int i = 0; i < trains.get(j).getWagones().size(); i++)
                 {
-                    if (wagons.get(i).getWagonNumber().equals(wagon) && wagons.get(i).getTrain().getTrainNumber().equals(train))
+                    System.out.println("Добавление места");
+                    if ((trains.get(j).getWagones().get(i).getWagonNumber() == wagon) && trains.get(j).getTrainNumber().equals(train))
                     {
-                        seats.add(new Seat(seatNumber1, wagons.get(i)));
+                        //seats.add(new Seat(seatNumber1, wagons.get(i)));
+                        trains.get(j).getWagones().get(i).addSeat(new Seat(seatNumber1));
+                        System.out.println("Добавление места");
                         break;
                     }
                 }
+            }
                 infoWindow.setText("Успешно!");
                 hidePanes(true, true, true, true);
                 seatNumber.clear();
-            }
+
         }
     }
 
@@ -203,22 +254,27 @@ public class Controller implements Initializable {
     {
         hidePanes(true, true, true, false);
         infoArea.clear();
-        for (int i = 0; i < seats.size(); i++)
-        {
-            infoArea.appendText("= = = = = = = = = = = = = = = = = = = = = =\n");
-            infoArea.appendText("Место:\n");
-            infoArea.appendText("Номер места: " + seats.get(i).getSeatNumver() + "\n");
-            infoArea.appendText("Вагон:\n");
-            infoArea.appendText("Номер вагона: " + seats.get(i).getWagon().getWagonNumber() + "\n");
-            infoArea.appendText("Кол-во мест в вагоне: " + seats.get(i).getWagon().getNumberOfSeats() + "\n");
-            infoArea.appendText("Поезд:\n");
-            infoArea.appendText("Номер вагона: " + seats.get(i).getWagon().getTrain().getTrainNumber() + "\n");
-            infoArea.appendText("= = = = = = = = = = = = = = = = = = = = = =\n");
+        //System.out.println("Хай");
+        for (int i = 0; i < trains.size(); i++) {
+            for (int j = 0; j < trains.get(i).getWagones().size(); j++) {
+                for (int k = 0; k < trains.get(i).getWagones().get(j).getSeat().size(); k++) {
+                    infoArea.appendText("= = = = = = = = = = = = = = = = = = = = = =\n");
+                    infoArea.appendText("Место:\n");
+                    infoArea.appendText("Номер места: " + trains.get(i).getWagones().get(j).getSeat().get(k).getSeatNumver() + "\n");
+                    infoArea.appendText("Вагон:\n");
+                    infoArea.appendText("Номер вагона: " + trains.get(i).getWagones().get(j).getWagonNumber() + "\n");
+                    infoArea.appendText("Кол-во мест в вагоне: " + trains.get(i).getWagones().get(j).getNumberOfSeats() + "\n");
+                    infoArea.appendText("Поезд:\n");
+                    infoArea.appendText("Номер поезда: " + trains.get(i).getTrainNumber() + "\n");
+                    infoArea.appendText("= = = = = = = = = = = = = = = = = = = = = =\n");
+                }
+            }
         }
     }
 
     @FXML
-    void initialize() {
+    void initialize()
+    {
         assert createTrain != null : "fx:id=\"createTrain\" was not injected: check your FXML file 'sample.fxml'.";
         assert trainList != null : "fx:id=\"trainList\" was not injected: check your FXML file 'sample.fxml'.";
         assert wagonList != null : "fx:id=\"wagonList\" was not injected: check your FXML file 'sample.fxml'.";

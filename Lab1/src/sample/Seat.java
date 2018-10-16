@@ -4,21 +4,14 @@ package sample;
 public class Seat
 {
     private int seatNumber;         //Номер места
-    Wagon wagon;                    //В каком вагоне место
 
-    public Seat(int seatNumber, Wagon wagon)
+    public Seat(int seatNumber)
     {
         this.seatNumber = seatNumber;
-        this.wagon = wagon;
     }
 
     public int getSeatNumver()
     {
         return seatNumber;
-    }
-
-    public  Wagon getWagon()
-    {
-        return wagon;
     }
 }

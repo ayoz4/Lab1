@@ -1,32 +1,39 @@
 package sample;
 import sample.Train;
 
+import java.util.ArrayList;
+
 public class Wagon
 {
-    private String wagonNumber;            //Номер вагона
-    private String numberOfSeats;          //Кол-во мест в вагоне
-    private Train train;                //Вагон какого поезда
+    private int wagonNumber;            //Номер вагона
+    private int numberOfSeats;          //Кол-во мест в вагоне
+    private ArrayList<Seat> seats;      //Вагон какого поезда
 
 
-    public Wagon(String wagonNumber, String numberOfSeats, Train train)
+    public Wagon(int wagonNumber, int numberOfSeats)
     {
         this.wagonNumber = wagonNumber;
         this.numberOfSeats = numberOfSeats;
-        this.train = train;
+        seats = new ArrayList<>();
     }
 
-    public String getWagonNumber()
+    public int getWagonNumber()
     {
         return wagonNumber;
     }
 
-    public String getNumberOfSeats()
+    public int getNumberOfSeats()
     {
         return numberOfSeats;
     }
 
-    public Train getTrain()
+    public ArrayList<Seat> getSeat()
     {
-        return train;
+        return seats;
+    }
+
+    public void addSeat(Seat seat)
+    {
+        seats.add(seat);
     }
 }
