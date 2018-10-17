@@ -64,8 +64,6 @@ public class Controller implements Initializable {
     private TextField seatNumber;
 
     private ArrayList<Train> trains = new ArrayList<>();
-    //private ArrayList<Wagon> wagons = new ArrayList<>();
-    //private ArrayList<Seat> seats = new ArrayList<>();
 
     //Функция для открытия слоя с созданием поезда
     @FXML
@@ -125,68 +123,36 @@ public class Controller implements Initializable {
 
     @FXML
     void createWagonButton(ActionEvent event) {
-        int wagonNumber = Integer.parseInt(WagonNumber.getText());
-        int seatNumber1 = Integer.parseInt(numberOfSeat.getText());
-        if (WagonNumber.getText().equals(""))
+        boolean error = true;
+        int wagonNumber = 0, seatNumber1 = 0;
+        try
         {
-            infoWindow.setText("Не правда!");
-        } else {
-            if (wagonNumber < 1) {
-                infoWindow.setText("Отрицательное значение");
-            } else {
-                {
-                    //if (seatNumber1 < 1 || numberOfSeat.getText().equals("") || seatNumber1 > 54)
-                    if (numberOfSeat.getText().equals("")) {
-                        infoWindow.setText("Кол-во мест указано некрректно!");
-                    } else {
-                        //Train tr;
-                        //Добавление в класс Wagon
-                        for (int i = 0; i < trains.size(); i++) {
-                            System.out.println(trains.size());                                                  //Для примера
-                            if (trains.get(i).getTrainNumber().equals(trainList.getValue().toString())) {
-                                System.out.println("Добавление вагона");
-                                trains.get(i).addWagon(new Wagon(wagonNumber, seatNumber1));    //Добавление вагона в коллекцию вагонов в классе Train
-                                System.out.println("" + trains.get(i).getWagones().size());   //Для примерв
-                                break;
-                            }
-                        }
-                        infoWindow.setText("Успешно!");
-                        addSeat.setDisable(false);
-                        hidePanes(true, true, true, true);
-                        numberOfSeat.clear();
-                        WagonNumber.clear();
-                    }
+            wagonNumber = Integer.parseInt(WagonNumber.getText());
+            System.out.println(wagonNumber);
+            seatNumber1 = Integer.parseInt(numberOfSeat.getText());
+            System.out.println(seatNumber1);
+        }
+        catch (Exception e)
+        {
+            infoWindow.setText("Error!");
+            error = false;
+        }
+        if (error)
+        {
+            for (int i = 0; i < trains.size(); i++) {
+                System.out.println(trains.size());                                                  //Для примера
+                if (trains.get(i).getTrainNumber().equals(trainList.getValue().toString())) {
+                    System.out.println("Добавление вагона");
+                    trains.get(i).addWagon(new Wagon(wagonNumber, seatNumber1));    //Добавление вагона в коллекцию вагонов в классе Train
+                    System.out.println("" + trains.get(i).getWagones().size());   //Для примерв
+                    break;
                 }
             }
-                /*else
-                {
-                    //if (seatNumber1 < 1 || numberOfSeat.getText().equals("") || seatNumber1 > 54)
-                    if (numberOfSeat.getText().equals(""))
-                    {
-                        infoWindow.setText("Кол-во мест указано некрректно!");
-                    }
-                    else
-                    {
-                        //Train tr;
-                        //Добавление в класс Wagon
-                        for (int i = 0; i < trains.size(); i++)
-                        {
-                            System.out.println(trains.size());                                                  //Для примера
-                            if (trains.get(i).getTrainNumber().equals(trainList.getValue().toString()))
-                            {
-                                System.out.println("Добавление вагона");
-                                trains.get(i).addWagon(new Wagon(wagonNumber, seatNumber1));    //Добавление вагона в коллекцию вагонов в классе Train
-                                System.out.println("" + trains.get(i).getWagones().size());   //Для примерв
-                                break;
-                            }
-                        }
-                        infoWindow.setText("Успешно!");
-                        addSeat.setDisable(false);
-                        hidePanes(true, true, true, true);
-                        numberOfSeat.clear();
-                        WagonNumber.clear();
-                    }
-                }*/
+            infoWindow.setText("Успешно!");
+            addSeat.setDisable(false);
+            hidePanes(true, true, true, true);
+            numberOfSeat.clear();
+            WagonNumber.clear();
         }
     }
 
@@ -215,26 +181,37 @@ public class Controller implements Initializable {
         //int index1 = Integer.parseInt(index);
         int bracket = wagonList.getValue().toString().indexOf(" (");
         int clBracket = wagonList.getValue().toString().indexOf(")");
-        int seatNumber1 = Integer.parseInt(seatNumber.getText());
+        int seatNumber1 = 0;
         int wagon = Integer.parseInt(wagonList.getValue().toString().substring(0, bracket));
         String train = wagonList.getValue().toString().substring(bracket + 2, clBracket);
         int train1 = Integer.parseInt(train);
-        if (seatNumber1 < 1 || seatNumber1 > 54)    //TODO: Сделать проверку на места вагона
+        boolean error = true;
+        try
+        {
+            seatNumber1 = Integer.parseInt(seatNumber.getText());
+        }
+        catch (Exception e)
         {
             infoWindow.setText("Некорректное значение!");
+            error = false;
         }
-        else
-        {
-            /*if (wagonList.getValue() == null)
-                infoWindow.setText("Выберите вагон, пожалуйста!");
-            else*/
-            for (int j = 0; j < trains.size(); j++)
-            {
-                for (int i = 0; i < trains.get(j).getWagones().size(); i++)
-                {
-                    System.out.println("Добавление места");
-                    if ((trains.get(j).getWagones().get(i).getWagonNumber() == wagon) && trains.get(j).getTrainNumber().equals(train))
+        if (error) {
+            for (int j = 0; j < trains.size(); j++) {
+                for (int i = 0; i < trains.get(j).getWagones().size(); i++) {
+                    if (seatNumber1 < 1 || seatNumber1 > 54 || seatNumber1 > trains.get(j).getWagones().get(i).getNumberOfSeats())    //TODO: Сделать проверку на места вагона
                     {
+                        infoWindow.setText("Некорректное значение!");
+                        error = false;
+                        break;
+                    }
+                }
+            }
+        }
+        if (error) {
+            for (int j = 0; j < trains.size(); j++) {
+                for (int i = 0; i < trains.get(j).getWagones().size(); i++) {
+                    System.out.println("Добавление места");
+                    if ((trains.get(j).getWagones().get(i).getWagonNumber() == wagon) && trains.get(j).getTrainNumber().equals(train)) {
                         //seats.add(new Seat(seatNumber1, wagons.get(i)));
                         trains.get(j).getWagones().get(i).addSeat(new Seat(seatNumber1));
                         System.out.println("Добавление места");
@@ -242,10 +219,9 @@ public class Controller implements Initializable {
                     }
                 }
             }
-                infoWindow.setText("Успешно!");
-                hidePanes(true, true, true, true);
-                seatNumber.clear();
-
+            infoWindow.setText("Успешно!");
+            hidePanes(true, true, true, true);
+            seatNumber.clear();
         }
     }
 
