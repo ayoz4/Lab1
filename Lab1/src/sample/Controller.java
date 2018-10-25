@@ -139,9 +139,11 @@ public class Controller implements Initializable {
         }
         if (error)
         {
-            for (int i = 0; i < trains.size(); i++) {
+            for (int i = 0; i < trains.size(); i++)
+            {
                 System.out.println(trains.size());                                                  //Для примера
-                if (trains.get(i).getTrainNumber().equals(trainList.getValue().toString())) {
+                if (trains.get(i).getTrainNumber().equals(trainList.getValue().toString()))
+                {
                     System.out.println("Добавление вагона");
                     trains.get(i).addWagon(new Wagon(wagonNumber, seatNumber1));    //Добавление вагона в коллекцию вагонов в классе Train
                     System.out.println("" + trains.get(i).getWagones().size());   //Для примерв
@@ -198,7 +200,7 @@ public class Controller implements Initializable {
         if (error) {
             for (int j = 0; j < trains.size(); j++) {
                 for (int i = 0; i < trains.get(j).getWagones().size(); i++) {
-                    if (seatNumber1 < 1 || seatNumber1 > 54 || seatNumber1 > trains.get(j).getWagones().get(i).getNumberOfSeats())    //TODO: Сделать проверку на места вагона
+                    if (seatNumber1 < 1 || seatNumber1 > 54 || seatNumber1 > trains.get(j).getWagones().get(i).getNumberOfSeats())
                     {
                         infoWindow.setText("Некорректное значение!");
                         error = false;
@@ -207,12 +209,15 @@ public class Controller implements Initializable {
                 }
             }
         }
-        if (error) {
-            for (int j = 0; j < trains.size(); j++) {
-                for (int i = 0; i < trains.get(j).getWagones().size(); i++) {
+        if (error)
+        {
+            for (int j = 0; j < trains.size(); j++)
+            {
+                for (int i = 0; i < trains.get(j).getWagones().size(); i++)
+                {
                     System.out.println("Добавление места");
-                    if ((trains.get(j).getWagones().get(i).getWagonNumber() == wagon) && trains.get(j).getTrainNumber().equals(train)) {
-                        //seats.add(new Seat(seatNumber1, wagons.get(i)));
+                    if ((trains.get(j).getWagones().get(i).getWagonNumber() == wagon) && trains.get(j).getTrainNumber().equals(train))
+                    {
                         trains.get(j).getWagones().get(i).addSeat(new Seat(seatNumber1));
                         System.out.println("Добавление места");
                         break;
@@ -230,18 +235,17 @@ public class Controller implements Initializable {
     {
         hidePanes(true, true, true, false);
         infoArea.clear();
-        //System.out.println("Хай");
         for (int i = 0; i < trains.size(); i++) {
             for (int j = 0; j < trains.get(i).getWagones().size(); j++) {
                 for (int k = 0; k < trains.get(i).getWagones().get(j).getSeat().size(); k++) {
                     infoArea.appendText("= = = = = = = = = = = = = = = = = = = = = =\n");
                     infoArea.appendText("Место:\n");
-                    infoArea.appendText("Номер места: " + trains.get(i).getWagones().get(j).getSeat().get(k).getSeatNumver() + "\n");
+                    infoArea.appendText("   Номер места: " + trains.get(i).getWagones().get(j).getSeat().get(k).getSeatNumver() + "\n");
                     infoArea.appendText("Вагон:\n");
-                    infoArea.appendText("Номер вагона: " + trains.get(i).getWagones().get(j).getWagonNumber() + "\n");
-                    infoArea.appendText("Кол-во мест в вагоне: " + trains.get(i).getWagones().get(j).getNumberOfSeats() + "\n");
+                    infoArea.appendText("   Номер вагона: " + trains.get(i).getWagones().get(j).getWagonNumber() + "\n");
+                    infoArea.appendText("   Кол-во мест в вагоне: " + trains.get(i).getWagones().get(j).getNumberOfSeats() + "\n");
                     infoArea.appendText("Поезд:\n");
-                    infoArea.appendText("Номер поезда: " + trains.get(i).getTrainNumber() + "\n");
+                    infoArea.appendText("   Номер поезда: " + trains.get(i).getTrainNumber() + "\n");
                     infoArea.appendText("= = = = = = = = = = = = = = = = = = = = = =\n");
                 }
             }
